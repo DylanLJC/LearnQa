@@ -32,3 +32,4 @@ class TestCalc:
     def test_div(self, a, b, excption):
         result = self.calc.div(a, b)
         assert result == excption
+     ###
