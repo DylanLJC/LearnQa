@@ -2,7 +2,7 @@ from time import sleep
 
 from selenium import webdriver
 
-
+# 老师关于断言我只能想到这个方法，有什么断言可以判断有没有登录呢？
 class TestCookiesDemo:
     def setup(self):
         self.driver = webdriver.Chrome()
