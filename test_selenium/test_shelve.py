@@ -1,4 +1,5 @@
 import shelve
+from lib2to3.pgen2 import driver
 from time import sleep
 
 from selenium import webdriver
@@ -71,5 +72,6 @@ class TestCookiesDemo:
         for cookie in cookies:  ##为什么用循环语句？   因为是一个列表， add_coockies只能用字典格式，之能一个个遍历遍历到数据中
             self.driver.add_cookie(cookie)
         self.driver.get("https://work.weixin.qq.com/wework_admin/frame")
-        sleep(5)
-        # assert 'active' == categoryele.get_attribute("class")  # 执行的最后一定要加断言
+        sleep(2)
+
+    # assert "企业微信" in driver.title
