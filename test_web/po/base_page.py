@@ -5,7 +5,7 @@ class BasePage:
     """
     提供与页面无关的封装，比如driver初始化
     """
-    base_url = ""
+    _base_url = ""  # _下划线代表私有
 
     def __init__(self, base_driver=None):
 

@@ -6,7 +6,7 @@ from test_web.po.base_page import BasePage
 
 class AddMemberPage(BasePage):
     # 抽离变量
-    username_ele = (By.ID, "username")
+    _username_ele = (By.ID, "username")
 
     def add_member(self):
         """

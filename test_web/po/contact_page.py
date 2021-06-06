@@ -5,7 +5,7 @@ from test_web.po.base_page import BasePage
 
 
 class ContactPage(BasePage):
-    base_url = "https://work.weixin.qq.com/wework_admin/frame#contacts"
+    _base_url = "https://work.weixin.qq.com/wework_admin/frame#contacts"
 
     def goto_add_member(self):
         """

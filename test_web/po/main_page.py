@@ -11,7 +11,7 @@ from test_web.po.contact_page import ContactPage
 
 class MainPage(BasePage):  # 子类调用父类的实例变量
     # 子类中添加base_url 就是起始的url  #和业务解耦
-    base_url = "https://work.weixin.qq.com/wework_admin/frame#index"
+    _base_url = "https://work.weixin.qq.com/wework_admin/frame#index"
 
     def goto_contact(self):
         """
