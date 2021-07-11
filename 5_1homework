@@ -1,0 +1,72 @@
+import json
+
+import mitmproxy
+from mitmproxy import http, ctx
+
+
+class Events:
+    def http_connect(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            An HTTP CONNECT request was received. Setting a non 2xx response on
+            the flow will return the response to the client abort the
+            connection. CONNECT requests and responses do not generate the usual
+            HTTP handler events. CONNECT requests are only valid in regular and
+            upstream proxy modes.
+        """
+
+    def requestheaders(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            HTTP request headers were successfully read. At this point, the body
+            is empty.
+        """
+
+    def request(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            The full HTTP request has been read.
+        """
+        """https://stock.xueqiu.com/v5/stock/batch/quote.json?_t=1HUAWEId468c209dfa5782461279b8b407b37b0.2966705704.1625890067948.1625890187830&_s=a0f970&symbol=SH000001%2CSZ399001%2CSZ399006&extend=detail"""
+        # if "quote.json" in flow.request.pretty_url:
+        #     with open("ces.json",ecoding='utf-8') as f:
+        #         flow.response=http.HTTPResponse.make(
+        #             200,
+        #             f.read(),
+        #             {"content-type":"application/json"}
+        #
+        #         )
+
+    def responseheaders(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            HTTP response headers were successfully read. At this point, the body
+            is empty.
+        """
+
+    def response(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            The full HTTP response has been read.
+        """
+        if "quote.json" in flow.request.pretty_url and "x=" in flow.request.pretty_url:
+            # data =json.loads(flow.response.content)
+            # ctx.log.info(data)
+            ctx.log.info(str(flow.response.content))
+            data =json.loads(flow.response.content)
+            with open("data.json","w",encoding="utf-8") as f:
+                f.write(str(data))
+            data['data']['items'][0]['quote']["name"]="lijianchao"
+            data['data']['items'][1]['quote']["name"] = "zuoyong "
+            #以下是实现rewrite操作，测试涨跌幅的边界值
+            data['data']['items'][0]['quote']["percent"] = "0.00 "
+            data['data']['items'][1]['quote']["percent"] = "0.001 "
+            data['data']['items'][2]['quote']["percent"] = "0.0001 "
+            data['data']['items'][3]['quote']["percent"] = "-0.0001 "
+            flow.response.text = json.dumps(data)
+
+
+    def error(self, flow: mitmproxy.http.HTTPFlow):
+        """
+            An HTTP error has occurred, e.g. invalid server responses, or
+            interrupted connections. This is distinct from a valid server HTTP
+            error response, which is simply a response with an HTTP error code.
+        """
+addons = [
+     Events()
+         ]
