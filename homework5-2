@@ -1,0 +1,24 @@
+import requests
+
+url='https://httpbin.testing-studio.com/post'
+
+def test_json():
+     data ={"a":1}
+     proxy={"http":"http://127.0.0.1:8888",
+             "https":"http://127.0.0.1:8888"}
+     r=requests.post(url=url,json=data,proxies=proxy, verify=False)
+     print(r.json())
+def test_post_json():
+    playload={
+        "level":1,
+        "name":"seveniruby"
+    }
+    r = requests.post('https://httpbin.testing-studio.com/post',json=playload)
+    print(r.text)
+    assert r.status_code==200
+    assert r.json()['json']['level']==1
+def test_get():
+     r=requests.get('https://httpbin.testing-studio.com/get',verify=False)
+     print(r.status_code)
+     assert r.status_code == 200
+
